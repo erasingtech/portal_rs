@@ -15,7 +15,9 @@ RUN cargo install cargo-leptos
 WORKDIR /app
 
 # Copy the Cargo files
-COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
+COPY Cargo.toml rust-toolchain.toml ./
+# Copy Cargo.lock if it exists (for reproducible builds)
+COPY Cargo.lock* ./
 
 # Copy the source code
 COPY src ./src
