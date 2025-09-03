@@ -1,5 +1,5 @@
 [providers]
-rust = "nightly"
+rust = "1.80.0"
 
 [variables]
 CARGO_NET_GIT_FETCH_WITH_CLI = "true"

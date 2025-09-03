@@ -1,5 +1,5 @@
-# Use the official Rust nightly image as a parent image
-FROM rust:nightly as builder
+# Use the official Rust stable image as a parent image
+FROM rust:1.80-slim as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
 ENV OPENSSL_NO_VENDOR=1
 ENV PKG_CONFIG_ALLOW_CROSS=1
 
-# Install cargo-leptos (latest version compatible with nightly)
-RUN cargo install cargo-leptos
+# Install cargo-leptos version compatible with stable Rust
+RUN cargo install cargo-leptos --version 0.2.28
 
 # Set the working directory
 WORKDIR /app
