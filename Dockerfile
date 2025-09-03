@@ -1,5 +1,5 @@
-# Use the official Rust stable image as a parent image
-FROM rust:1.80-slim as builder
+# Use older Rust version where cargo-leptos works without edition2024
+FROM rust:1.70-slim as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
 ENV OPENSSL_NO_VENDOR=1
 ENV PKG_CONFIG_ALLOW_CROSS=1
 
-# Install cargo-leptos version compatible with stable Rust
-RUN cargo install cargo-leptos --version 0.2.28
+# Install cargo-leptos with older Rust version
+RUN cargo install cargo-leptos --version 0.2.17
 
 # Set the working directory
 WORKDIR /app
@@ -31,7 +31,7 @@ COPY src ./src
 COPY style ./style
 COPY assets ./assets
 
-# Build the application
+# Build the application with cargo-leptos
 RUN cargo leptos build --release
 
 # Runtime stage
