@@ -8,4 +8,6 @@ restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
 [environments.production]
-variables = { LEPTOS_ENV = "PROD", RUST_LOG = "info" }
+[environments.production.variables]
+LEPTOS_ENV = "PROD"
+RUST_LOG = "info"
