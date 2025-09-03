@@ -1,12 +1,19 @@
 # Use the official Rust nightly image as a parent image
-FROM rustlang/rust:nightly-slim as builder
+FROM rust:nightly as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     pkg-config \
     libssl-dev \
     curl \
+    perl \
+    make \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables to use system OpenSSL
+ENV OPENSSL_NO_VENDOR=1
+ENV PKG_CONFIG_ALLOW_CROSS=1
 
 # Install cargo-leptos (latest version compatible with nightly)
 RUN cargo install cargo-leptos
