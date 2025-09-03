@@ -1,5 +1,5 @@
-# Use older Rust version where cargo-leptos works without edition2024
-FROM rust:1.70-slim as builder
+# Use newer Rust version that properly supports edition2024
+FROM rust:1.83-slim as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
 ENV OPENSSL_NO_VENDOR=1
 ENV PKG_CONFIG_ALLOW_CROSS=1
 
-# Install cargo-leptos with older Rust version
-RUN cargo install cargo-leptos --version 0.2.17
+# Install cargo-leptos with newer Rust that supports edition2024
+RUN cargo install cargo-leptos
 
 # Set the working directory
 WORKDIR /app
