@@ -1,5 +1,5 @@
-# Use the official Rust image as a parent image
-FROM rust:1.82-slim as builder
+# Use the official Rust nightly image as a parent image
+FROM rustlang/rust:nightly-slim as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install specific version of cargo-leptos compatible with Rust 1.82
-RUN cargo install cargo-leptos --version 0.2.42
+# Install cargo-leptos (latest version compatible with nightly)
+RUN cargo install cargo-leptos
 
 # Set the working directory
 WORKDIR /app
