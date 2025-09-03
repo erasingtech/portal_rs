@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y \
 ENV OPENSSL_NO_VENDOR=1
 ENV PKG_CONFIG_ALLOW_CROSS=1
 
-# Install cargo-leptos with newer Rust that supports edition2024
-RUN cargo install cargo-leptos
-
 # Set the working directory
 WORKDIR /app
 
@@ -31,8 +28,15 @@ COPY src ./src
 COPY style ./style
 COPY assets ./assets
 
-# Build the application with cargo-leptos
-RUN cargo leptos build --release
+# Create output directories
+RUN mkdir -p target/site
+
+# Build the SSR server binary only (no client-side hydration)
+RUN cargo build --release --bin leptos_ssr_actix --features ssr --no-default-features
+
+# Copy static assets to site directory
+RUN cp -r assets/* target/site/ 2>/dev/null || true
+RUN cp -r style/* target/site/ 2>/dev/null || true
 
 # Runtime stage
 FROM debian:bookworm-slim
