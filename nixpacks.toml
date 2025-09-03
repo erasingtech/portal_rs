@@ -1,0 +1,16 @@
+[providers]
+rust = "1.75.0"
+
+[variables]
+CARGO_NET_GIT_FETCH_WITH_CLI = "true"
+RUST_LOG = "info"
+LEPTOS_ENV = "PROD"
+
+[phases.setup]
+nixPkgs = ["nodejs", "cargo-leptos"]
+
+[phases.build]
+cmds = ["cargo leptos build --release"]
+
+[start]
+cmd = "./target/release/leptos_ssr_actix"
